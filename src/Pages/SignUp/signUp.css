@@ -6,7 +6,7 @@
 }
 .signUp-page-wrapper {
     width: 90%;
-    min-height: 100vh;
+    min-height: 90vh;
     display: grid;
     margin-top: 7rem;
     color: #fff;
@@ -45,9 +45,16 @@ select {
   background-color: rgba(246, 253, 251, 0.93);
 }
 .phone-container {
-  grid-template-columns: 3fr 1fr !important;
+  grid-template-columns:  2fr 1fr !important;
+  column-gap: 1rem;
+}
+.phone-container div:first-child{
+    position: relative;
+
 }
 .send-otp-btn {
+    position: absolute;
+    right: 0rem;
   font-weight: 600;
   padding: 0.7rem 1.4rem;
   border-radius: 0.4rem;
@@ -70,7 +77,7 @@ select {
   background-color: aquamarine;
 }
 .bottom-container {
-  grid-template-columns: 1fr 4fr;
+  grid-template-columns: 4fr 1fr;
   align-items: flex-end;
   font-size: 0.89rem;
 }

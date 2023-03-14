@@ -44,14 +44,15 @@ console.log(errors);
             {<p className="error-message">{errors.email}</p>}
           </div>
           <div className="phone-container grid-two-col">
-            <label htmlFor="phone">Phone-Number</label>
+           <div> <label htmlFor="phone">Phone-Number</label>
             <input type="number" name="phone" id="phone" placeholder="Phone Number" value={values.phone} onChange={handleChange} onBlur={handleBlur}/>
             <button className="send-otp-btn">Send OTP</button>
-            {<p className="error-message">{errors.phone}</p>}
-          </div>
+            </div>
           <div>
             <label htmlFor="otp">Verify OTP</label>
             <input type="text" name="otp" id="otp" placeholder="Enter OTP" autoComplete="off" />
+          </div>
+            {<p className="error-message">{errors.phone}</p>}
           </div>
           <div>
             <label htmlFor="branch">Branch</label>
@@ -78,8 +79,8 @@ console.log(errors);
             </select>
           </div>
           <div className="bottom-container grid-two-col">
-          <input className="sign-up-btn" type="submit" value="Sign Up" />
           <p>Registered already ? <Link to="/signInPage" className="signIn-text">Sign In</Link></p>
+          <input className="sign-up-btn" type="submit" value="Sign Up" />
           </div>
         </form>
       </div>
