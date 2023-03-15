@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 import "./profilePage.css"
 
 const ProfilePage = () => {
@@ -8,7 +9,10 @@ const ProfilePage = () => {
         <div className="header-container">
           <div className="header-wrapper d-flex">
             <div> <h2>IDEA INNOVATION CELL</h2></div>
-            <div><p>Hello, user</p></div>
+            <div className='d-flex hello-user-wrapper'>
+              <p>Hello, user</p>
+              <Link to="/signInPage" className='logout-btn'>Logout</Link>
+            </div>
           </div>
         </div >
         {/* //////////// */}
@@ -46,7 +50,7 @@ const ProfilePage = () => {
             <p>Level 1 :</p>
             <p >Date : 17 March ,2023</p>
             <p ><a className='test-link' href="https://try.typeform.com/quiz-builder/?&tf_campaign=asia_me-generic-quiz-english-combined_18081895327&tf_source=google&tf_medium=paid&tf_content=141395751058_617095022869&tf_term=quiz%20maker&tf_dv=c&tf_matchtype=e&tf_adposition=&tf_location=20465">Take Test 1</a></p>
-            <p className='result'>Result : </p>
+            <p className='result'>Result :  </p>
             </div>
           <div className="grid-col-3">
             <p>Level 2 :</p>

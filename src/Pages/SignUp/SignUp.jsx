@@ -50,7 +50,7 @@ console.log(errors);
             </div>
           <div>
             <label htmlFor="otp">Verify OTP</label>
-            <input type="text" name="otp" id="otp" placeholder="Enter OTP" autoComplete="off" />
+            <input type="number" name="otp" id="otp" placeholder="Enter OTP" autoComplete="off" />
           </div>
             {<p className="error-message">{errors.phone}</p>}
           </div>

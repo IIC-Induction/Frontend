@@ -11,3 +11,21 @@
     font-size: 2.3rem;
     margin-bottom: 4rem;
 }
+@media screen and (max-width: 1200px) {
+    :root {
+      font-size: 86%;
+    }
+    .signIn-page-wrapper {
+        min-height: 90.5vh !important;
+    }
+}
+@media screen and (max-width: 500px) {
+    .signIn-page-wrapper form h2{
+        width: 100vw;
+        margin-left: -3.5rem;
+
+    }
+    .signIn-page-wrapper form{
+        padding:3rem;
+    }
+}
