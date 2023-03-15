@@ -80,7 +80,8 @@ console.log(errors);
           </div>
           <div className="bottom-container grid-two-col">
           <p>Registered already ? <Link to="/signInPage" className="signIn-text">Sign In</Link></p>
-          <input className="sign-up-btn" type="submit" value="Sign Up" />
+          {/* <input className="sign-up-btn" type="submit" value="Sign Up" /> */}
+          <button type="submit" className="sign-up-btn">Sign Up</button>
           </div>
         </form>
       </div>

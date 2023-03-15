@@ -30,7 +30,8 @@ const SignIn = () => {
        
           <div className="bottom-container grid-two-col">
           <p>Not Registered ? <Link to="/" className="signIn-text">Sign Up</Link></p>
-          <input className="sign-up-btn" type="submit" value="Sign In" />
+          {/* <input className="sign-up-btn" type="submit" value="Sign In" /> */}
+          <button type="submit" className="sign-up-btn">Sign In</button>
           </div>
         </form>
       </div>
