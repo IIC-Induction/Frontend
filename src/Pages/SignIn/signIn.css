@@ -20,6 +20,11 @@
     }
 }
 @media screen and (max-width: 500px) {
+
+    .signIn-page-wrapper {
+        min-height: fit-content !important;
+    }
+
     .signIn-page-wrapper form h2{
         width: 100vw;
         margin-left: -3.5rem;
