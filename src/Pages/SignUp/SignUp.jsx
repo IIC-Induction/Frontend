@@ -1,58 +1,117 @@
 import React from "react";
 import "./signUp.css";
 import astronaut from "../../Images/astronaut.avif";
+import { Link, useNavigate } from 'react-router-dom';
+import { useState } from 'react';
+
 const SignUp = () => {
+  const navigate = useNavigate();
+  const [dom1, setDom1] = useState("");
+  const [dom2, setDom2] = useState("");
+  const [user, setUser] = useState({
+    name: "", email: "", contact: "", branch: ""
+  });
+
+  const handleInput = (e) => {
+    const { name, value } = e.target;
+    setUser({ ...user, [name]: value })
+    console.log(user);
+  }
+  const option1 = (e) => {
+    setDom1(e.target.value);
+    console.log(dom1);
+  }
+  const option2 = (e) => {
+    setDom2(e.target.value);
+    console.log(dom2);
+  }
+  const postRegister = async (e) => {
+    e.preventDefault();
+    let userData = [];
+    const { name, email, contact, branch } = user;
+    const res = await fetch("https://induction2023-2fqt.onrender.com/register", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        name, email, contact, branch, pref1: dom1, pref2: dom2
+      })
+    })
+    const data = await res.json();
+
+    console.log(data.message);
+    alert(`${data.message}`);
+    if (data.status == 201) {
+      console.log("fuck");
+      navigate("/signInPage");
+    }
+    console.log(data);
+    console.log(dom1);
+    console.log(dom2);
+    // console.log(password)
+    // console.log(data);
+    // if (data.status == "ok") {
+    //   alert(`Login Successful`);
+    //   window.localStorage.setItem("token", data.data);
+    //   window.localStorage.setItem("email", email);
+    //   window.localStorage.setItem("site", "freelancer");
+    //   history.push("/createWorkspace");
+    //   window.location.href = "./createWorkspace"
+    // }
+    // else if (data.status == "error")
+    //   alert(data.message);
+    // else alert("error logging in!");
+  }
   return (
     <>
       <div className="signUp-page-container d-flex">
-      <div className="signUp-page-wrapper">
-        <div className="signUp-page-img">
-          <img src={astronaut} alt="" />
-        </div>
-        <form action="" className="signUp-form">
+        <div className="signUp-page-wrapper">
+          <div className="signUp-page-img">
+            <img src={astronaut} alt="" />
+          </div>
+          <form action="" className="signUp-form">
             <h2>Idea Innovation Cell</h2>
-          <div>
-            <label htmlFor="name">Name</label>
-            <input type="text" name="name" id="Name" placeholder="Enter your Name" autoComplete="off" />
-          </div>
-          <div>
-            <label htmlFor="email">Email</label>
-            <input type="email" name="email" id="email" placeholder="Enter your Email" autoComplete="off" />
-          </div>
-          <div className="phone-container grid-two-col">
-            <label htmlFor="Phone Number">Phone-Number</label>
-            <input type="number" name="Phone-Number" id="Phone-Number" placeholder="Phone Number" autoComplete="off"/>
-            <button className="send-otp-btn">Send OTP</button>
-          </div>
-          <div>
-            <label htmlFor="otp">Verify OTP</label>
-            <input type="text" name="otp" id="otp" placeholder="Enter OTP" autoComplete="off" />
-          </div>
-          <div>
-            <label htmlFor="branch">Branch</label>
-            <input type="text" name="branch" id="branch" placeholder="Enter your Branch" autoComplete="off" />
-          </div>
-          <div className="grid-two-col">
-            <label htmlFor="preference-1">Your Domain Preference</label>
-            <select name="preference-1" id="preference-1">
-              <option value="Preference 1">Preference 1</option>
-              <option value="Cs-Electronics">Cs-Electronics</option>
-              <option value="Chemical">Chemical</option>
-              <option value="Mechnacial">Mechanical</option>
-              <option value="Management">Management</option>
-            </select>
+            <div>
+              <label htmlFor="name">Name</label>
+              <input type="text" name="name" id="Name" value={user.name} onChange={handleInput} placeholder="Enter your Name" autoComplete="off" />
+            </div>
+            <div>
+              <label htmlFor="email">Email</label>
+              <input type="email" name="email" value={user.email} id="email" onChange={handleInput} placeholder="Enter your Email" autoComplete="off" />
+            </div>
+            <div className="phone-container grid-two-col">
+              <label htmlFor="Phone Number">Phone-Number</label>
+              <input type="number" name="contact" onChange={handleInput} value={user.contact} id="Phone-Number" placeholder="Phone Number" autoComplete="off" />
+            </div>
+            <div>
+              <label htmlFor="branch">Branch</label>
+              <input type="text" name="branch" id="branch" onChange={handleInput} value={user.branch} placeholder="Enter your Branch" autoComplete="off" />
+            </div>
+            <div className="grid-two-col">
+              <label htmlFor="preference-1">Your Domain Preference</label>
+              <select name="preference-1" onChange={option1} id="preference-1">
+                <option value="Preference 1" name="pref1">Preference 1</option>
+                <option value="Cs-Electronics" name="pref1">Cs-Electronics</option>
+                <option value="Chemical" name="pref1">Chemical</option>
+                <option value="Mechanical" name="pref1">Mechanical</option>
+                <option value="Management" name="pref1">Management</option>
+              </select>
 
-            <select name="preference-2" id="preference-2">
-              <option value="Preference 2">Preference 2</option>
-              <option value="Cs-Electronics">Cs-Electronics</option>
-              <option value="Chemical">Chemical</option>
-              <option value="Mechnacial">Mechanical</option>
-              <option value="Management">Management</option>
-            </select>
-          </div>
-          <input className="sign-up-btn" type="submit" value="Sign Up" />
-        </form>
-      </div>
+              <select name="preference-2" onChange={option2} id="preference-2">
+                <option value="Preference 2" name="pref2">Preference 2</option>
+                <option value="Cs-Electronics" name="pref2">Cs-Electronics</option>
+                <option value="Chemical" name="pref2">Chemical</option>
+                <option value="Mechanical" name="pref2">Mechanical</option>
+                <option value="Management" name="pref2">Management</option>
+              </select>
+            </div>
+            <div className="bottom-container grid-two-col">
+              <p>Registered already ? <Link to="/signInPage" className="signIn-text">Sign In</Link></p>
+            </div>
+            <input className="sign-up-btn" type="submit" value="Sign Up" onClick={postRegister} />
+          </form>
+        </div>
       </div>
     </>
   );
