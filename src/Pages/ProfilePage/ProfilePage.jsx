@@ -3,9 +3,66 @@ import "./profilePage.css"
 
 const ProfilePage = () => {
   return (
-    <div>
-      
-    </div>
+    <>
+      <div className="user-profile-page">
+        <div className="header-container">
+          <div className="header-wrapper d-flex">
+            <div> <h2>IDEA INNOVATION CELL</h2></div>
+            <div><p>Hello, user</p></div>
+          </div>
+        </div >
+        {/* //////////// */}
+        <div className="user-profile">
+        <h3>Your Details</h3>
+          <div className="flex-col-2">
+            <p>Name:</p>
+            <p className='user-name'>Milan Ram</p>
+            </div>
+          <div className="flex-col-2">
+            <p>Email:</p>
+            <p className='user-email'>milanram@gmail.com</p>
+            </div>
+          <div className="flex-col-2">
+            <p>Phone:</p>
+            <p className='user-phone'>93487328838</p>
+            </div>
+          <div className="flex-col-2">
+            <p>Branch:</p>
+            <p className='user-branch'>Chemical Engineering</p>
+            </div>
+            <h4>Domain Preferences</h4>
+          <div className="flex-col-2">
+            <p>Preference 1:</p>
+            <p className='user-preference-1'>Chemical</p>
+            </div>
+          <div className="flex-col-2">
+            <p>Preference 2:</p>
+            <p className='user-preference-2'>Cs- Electronics</p>
+            </div>
+        </div>
+        <div className="user-result">
+          <h3>Induction Tests</h3>
+          <div className="grid-col-3">
+            <p>Level 1 :</p>
+            <p >Date : 17 March ,2023</p>
+            <p ><a className='test-link' href="https://try.typeform.com/quiz-builder/?&tf_campaign=asia_me-generic-quiz-english-combined_18081895327&tf_source=google&tf_medium=paid&tf_content=141395751058_617095022869&tf_term=quiz%20maker&tf_dv=c&tf_matchtype=e&tf_adposition=&tf_location=20465">Take Test 1</a></p>
+            <p className='result'>Result : </p>
+            </div>
+          <div className="grid-col-3">
+            <p>Level 2 :</p>
+            <p >Date : 22 March ,2023</p>
+            <p >PI Round 1</p>
+            <p className='result'>Result :  </p>
+            </div>
+          <div className="grid-col-3">
+            <p>Level 3 :</p>
+            <p >Date : 30 March ,2023</p>
+            <p >PI Round 2</p>
+            <p className='result'>Result : </p>
+            </div>
+        </div>
+      </div>
+    </>
   )
 }
 
