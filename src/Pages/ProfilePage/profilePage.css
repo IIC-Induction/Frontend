@@ -50,3 +50,7 @@
     color: #000;
     background-color: aquamarine;
 }
+
+.logout:hover {
+    cursor: pointer;
+}

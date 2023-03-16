@@ -8,14 +8,39 @@ const ProfilePage = () => {
   let userdetails = {};
   const [studentData, setStudentData] = useState({});
   const navigate = useNavigate();
+  const Logout = () => {
+    localStorage.clear();
+    window.location.href = "./signInPage";
+  }
+
   const callProfilePage = async () => {
     try {
+      const token = window.localStorage.getItem("userToken");
+      const res = await fetch("http://localhost:8000/verify", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          token
+        })
+      })
+      const ver = await res.json();
+      console.log("ver", ver);
+      if (ver.status === "error") {
+        localStorage.clear();
+        alert("You are logged out");
+        window.location.href = "./signInPage";
+      }
+      else {
+        console.log("user verified");
+      }
+
       userdetails = await JSON.parse(window.localStorage.getItem("induction2023data"));
+      console.log("studentdata", userdetails.regdno);
       console.log("userdataprofile", userdetails.name);
       setStudentData(userdetails);
-      console.log("studentdata", studentData);
-      // var username = userdetails.name;
-      // console.log("yo user", username);
+      console.log("studentdata", studentData.regdno);
     }
     catch (err) {
       console.log(err);
@@ -32,6 +57,7 @@ const ProfilePage = () => {
       <div className="user-profile-page">
         <div className="header-container">
           <div className="header-wrapper d-flex">
+            <div onClick={Logout} className='logout'>Logout</div>
             <div> <h2>IDEA INNOVATION CELL</h2></div>
             <div><p>Hello,{studentData.name} </p></div>
           </div>
@@ -54,6 +80,10 @@ const ProfilePage = () => {
           <div className="flex-col-2">
             <p>Branch:</p>
             <p className='user-branch'>{studentData.branch}</p>
+          </div>
+          <div className="flex-col-2">
+            <p>Registration No:</p>
+            <p className='user-branch'>{studentData.regdno}</p>
           </div>
           <h4>Domain Preferences</h4>
           <div className="flex-col-2">
@@ -86,7 +116,7 @@ const ProfilePage = () => {
             <p className='result'>Result : Coming soon...</p>
           </div>
         </div>
-      </div>
+      </div >
     </>
   )
 }

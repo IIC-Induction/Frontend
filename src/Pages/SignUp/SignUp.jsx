@@ -3,13 +3,33 @@ import "./signUp.css";
 import astronaut from "../../Images/astronaut.avif";
 import { Link, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
+// import { useFormik } from 'react';
+// import { signUpSchema } from "../schemas";
+
+// const initialValues = {
+//   name: "",
+//   email: "",
+//   phone: "",
+//   branch: "",
+//   preference_1: "",
+//   preference_2: "",
+// };
 
 const SignUp = () => {
+  // const { handleSubmit } = useFormik({
+  //   validationSchema: signUpSchema,
+  //   onSubmit: (values, action) => {
+  //     console.log(values);
+  //     action.resetForm()
+  //   },
+  // })
+
+
   const navigate = useNavigate();
   const [dom1, setDom1] = useState("");
   const [dom2, setDom2] = useState("");
   const [user, setUser] = useState({
-    name: "", email: "", contact: "", branch: ""
+    name: "", email: "", contact: "", branch: "", regdno: ""
   });
 
   const handleInput = (e) => {
@@ -25,19 +45,31 @@ const SignUp = () => {
     setDom2(e.target.value);
     console.log(dom2);
   }
+
+  const Login = () => {
+    const gettoken = window.localStorage.getItem("userToken");
+    console.log(gettoken);
+    if (gettoken)
+      window.location.href = "./ProfilePage";
+    else
+      window.location.href = "./signInPage";
+  }
+
   const postRegister = async (e) => {
     e.preventDefault();
+    localStorage.clear();
     let userData = [];
-    const { name, email, contact, branch } = user;
-    const res = await fetch("https://induction2023-2fqt.onrender.com/register", {
+    const { name, email, contact, branch, regdno } = user;
+    const res = await fetch("http://localhost:8000/register", {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
       },
       body: JSON.stringify({
-        name, email, contact, branch, pref1: dom1, pref2: dom2
+        name, email, contact, branch, regdno, pref1: dom1, pref2: dom2
       })
     })
+
     const data = await res.json();
 
     console.log(data.message);
@@ -70,7 +102,7 @@ const SignUp = () => {
           <div className="signUp-page-img">
             <img src={astronaut} alt="" />
           </div>
-          <form action="" className="signUp-form">
+          <form className="signUp-form">
             <h2>Idea Innovation Cell</h2>
             <div>
               <label htmlFor="name">Name</label>
@@ -87,6 +119,10 @@ const SignUp = () => {
             <div>
               <label htmlFor="branch">Branch</label>
               <input type="text" name="branch" id="branch" onChange={handleInput} value={user.branch} placeholder="Enter your Branch" autoComplete="off" />
+            </div>
+            <div className="phone-container grid-two-col">
+              <label htmlFor="Phone Number">Registration No:</label>
+              <input type="number" name="regdno" onChange={handleInput} value={user.regdno} id="Phone-Number" placeholder="Phone Number" autoComplete="off" />
             </div>
             <div className="grid-two-col">
               <label htmlFor="preference-1">Your Domain Preference</label>
@@ -107,7 +143,7 @@ const SignUp = () => {
               </select>
             </div>
             <div className="bottom-container grid-two-col">
-              <p>Registered already ? <Link to="/signInPage" className="signIn-text">Sign In</Link></p>
+              <p>Registered already ? <Link onClick={Login} className="signIn-text">Sign In</Link></p>
             </div>
             <input className="sign-up-btn" type="submit" value="Sign Up" onClick={postRegister} />
           </form>

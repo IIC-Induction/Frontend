@@ -10,8 +10,9 @@ const SignIn = () => {
   const [dom1, setDom1] = useState("");
   const [dom2, setDom2] = useState("");
   const [user, setUser] = useState({
-    email: "", contact: ""
+    email: "", regdno: ""
   });
+
 
 
   const handleInput = (e) => {
@@ -19,23 +20,28 @@ const SignIn = () => {
     setUser({ ...user, [name]: value })
     console.log(user);
   }
+
+
+
   const postLogin = async (e) => {
     e.preventDefault();
     let userData;
-    const { email, contact } = user;
-    const res = await fetch("https://induction2023-2fqt.onrender.com/login", {
+    const { email, regdno } = user;
+    const res = await fetch("http://localhost:8000/login", {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
       },
       body: JSON.stringify({
-        email, contact
+        email, regdno
       })
     })
     const data = await res.json();
     console.log(data);
     userData = data;
+    const userToken = userData.token;
     window.localStorage.setItem("induction2023data", JSON.stringify(userData));
+    window.localStorage.setItem("userToken", userToken);
     console.log(data.message);
     alert(`${data.message}`);
     if (data.status == 201) {
@@ -60,8 +66,8 @@ const SignIn = () => {
               {/* {<p className="error-message">{errors.email}</p>} */}
             </div>
             <div>
-              <label htmlFor="phone">Phone-Number</label>
-              <input type="number" name="contact" value={user.contact} id="phone" placeholder="Phone Number" onChange={handleInput} />
+              <label htmlFor="phone">Registration No</label>
+              <input type="number" name="regdno" value={user.regdno} id="phone" placeholder="Registration no" onChange={handleInput} />
 
               {/* {<p className="error-message">{errors.phone}</p>} */}
             </div>
