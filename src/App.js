@@ -13,7 +13,6 @@ function App() {
   <Route path='/signInPage' element={<SignIn/>}/>
   <Route path='/ProfilePage' element={<ProfilePage/>}/>
 </Routes>
-
     </div>
   );
 }
