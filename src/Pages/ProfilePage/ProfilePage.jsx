@@ -17,7 +17,7 @@ const ProfilePage = () => {
   const callProfilePage = async () => {
     try {
       const token = window.localStorage.getItem("userToken");
-      const res = await fetch("http://localhost:8000/verify", {
+      const res = await fetch("https://iicfinalinduction.onrender.com/verify", {
         method: "POST",
         headers: {
           "Content-Type": "application/json"

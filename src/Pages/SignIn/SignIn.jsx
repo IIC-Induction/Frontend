@@ -27,7 +27,7 @@ const SignIn = () => {
     e.preventDefault();
     let userData;
     const { email, regdno } = user;
-    const res = await fetch("http://localhost:8000/login", {
+    const res = await fetch("https://iicfinalinduction.onrender.com/login", {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
