@@ -7,6 +7,7 @@ import { useNavigate } from 'react-router-dom';
 const ProfilePage = () => {
   let userdetails = {};
   const [studentData, setStudentData] = useState({});
+  const [Status, setStatus] = useState("")
   const navigate = useNavigate();
   const Logout = () => {
     localStorage.clear();
@@ -26,7 +27,7 @@ const ProfilePage = () => {
         })
       })
       const ver = await res.json();
-      console.log("ver", ver);
+
       if (ver.status === "error") {
         localStorage.clear();
         alert("You are logged out");
@@ -37,10 +38,26 @@ const ProfilePage = () => {
       }
 
       userdetails = await JSON.parse(window.localStorage.getItem("induction2023data"));
-      console.log("studentdata", userdetails.regdno);
-      console.log("userdataprofile", userdetails.name);
+      window.localStorage.setItem("status", userdetails.result);
+      const key = window.localStorage.getItem("status");
+      // console.log("studentdata", userdetails.regdno);
+      // console.log("userdataprofile", userdetails.name);
       setStudentData(userdetails);
-      console.log("studentdata", studentData.regdno);
+      console.log("studentdata regdno", studentData.regdno);
+      console.log("studentdata regdno", studentData.name);
+      console.log("studentdata status", studentData.result);
+
+
+      if (key == -1) {
+        setStatus("Rejected")
+      }
+      else if (key == 1) {
+        setStatus("Accepted")
+      }
+      else {
+        console.log("jefwef");
+        setStatus("Coming Soon")
+      }
     }
     catch (err) {
       console.log(err);
@@ -49,9 +66,15 @@ const ProfilePage = () => {
 
   }
 
+
+
+
   useEffect(() => {
     callProfilePage();
   }, [])
+
+
+
   return (
     <>
       <div className="user-profile-page">
@@ -101,7 +124,7 @@ const ProfilePage = () => {
             <p>Level 1 :</p>
             <p >Date : 17 March ,2023</p>
             <p ><a className='test-link' href="https://try.typeform.com/quiz-builder/?&tf_campaign=asia_me-generic-quiz-english-combined_18081895327&tf_source=google&tf_medium=paid&tf_content=141395751058_617095022869&tf_term=quiz%20maker&tf_dv=c&tf_matchtype=e&tf_adposition=&tf_location=20465">Take Test 1</a></p>
-            <p className='result'>Result : Coming Soon ... </p>
+            <p className='result'>Result : {Status} </p>
           </div>
           <div className="grid-col-3">
             <p>Level 2 :</p>
