@@ -6,8 +6,13 @@ import { useState } from 'react';
 // import { useFormik } from 'react';
 // import { signUpSchema } from "../schemas";
 
+// ****************************************************************************************
+import { useForm } from 'react-hook-form'
+import { number, object, string } from 'yup'
+import { yupResolver } from '@hookform/resolvers/yup'
+// ****************************************************************************************
 // const initialValues = {
-//   name: "",
+  //   name: "",
 //   email: "",
 //   phone: "",
 //   branch: "",
@@ -23,6 +28,32 @@ const SignUp = () => {
   //     action.resetForm()
   //   },
   // })
+  // ****************************************************************************************
+  const validationSchema = object().shape({
+    name: string()
+      .required('Username is required')
+      .min(3, 'Username must be at least 3 characters'),
+    email: string().required('Email is required').email('Invalid email address'),
+    contact: number()
+      .required('Phone number is required')
+      .min(10, 'Enter valid contact number'),
+    branch: string()
+      .required('Enter your branch'),
+    regdno: number()
+      .required('Registration number is required')
+      .min(10, 'Enter valid registration number'),
+      select:string()
+      .required('select your domain'),
+  })
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    resolver: yupResolver(validationSchema),
+  })
+  // ****************************************************************************************
 
 
   const navigate = useNavigate();
@@ -56,9 +87,9 @@ const SignUp = () => {
   }
 
   const postRegister = async (e) => {
-    e.preventDefault();
+    // e.preventDefault();
     localStorage.clear();
-    let userData = [];
+    // let userData = [];
     const { name, email, contact, branch, regdno } = user;
     const res = await fetch("http://localhost:8000/register", {
       method: "POST",
@@ -74,7 +105,7 @@ const SignUp = () => {
 
     console.log(data.message);
     alert(`${data.message}`);
-    if (data.status == 201) {
+    if (data.status === 201) {
       console.log("fuck");
       navigate("/signInPage");
     }
@@ -102,50 +133,80 @@ const SignUp = () => {
           <div className="signUp-page-img">
             <img src={astronaut} alt="" />
           </div>
-          <form className="signUp-form">
+          <form onSubmit={handleSubmit(postRegister)} className="signUp-form">
             <h2>Idea Innovation Cell</h2>
             <div>
               <label htmlFor="name">Name</label>
-              <input type="text" name="name" id="Name" value={user.name} onChange={handleInput} placeholder="Enter your Name" autoComplete="off" />
+              <input type="text" {...register('name')} name="name" id="Name" value={user.name} onChange={handleInput} placeholder="Enter your Name" autoComplete="off" />
+              {errors.name && (
+            <p className="error-message">{errors.name.message}</p>
+          )}
             </div>
             <div>
               <label htmlFor="email">Email</label>
-              <input type="email" name="email" value={user.email} id="email" onChange={handleInput} placeholder="Enter your Email" autoComplete="off" />
+              <input type="email" {...register('email')} name="email" value={user.email} id="email" onChange={handleInput} placeholder="Enter your Email" autoComplete="off" />
+              {errors.email && <p className="error-message">{errors.email.message}</p>}
             </div>
-            <div className="phone-container grid-two-col">
+            <div className="grid-two-col">
+              <div>
               <label htmlFor="Phone Number">Phone-Number</label>
-              <input type="number" name="contact" onChange={handleInput} value={user.contact} id="Phone-Number" placeholder="Phone Number" autoComplete="off" />
+              <input type="number"  {...register('contact')} name="contact" onChange={handleInput} value={user.contact} id="Phone-Number" placeholder="Phone Number" autoComplete="off" />
+              {errors.contact && (
+            <p className="error-message">{errors.contact.message}</p>
+          )}
+          </div>
+           <div>
+              <label htmlFor="regdno">Registration No:</label>
+              <input type="number" {...register('regdno')}  name="regdno" onChange={handleInput} value={user.regdno} id="Phone-Number" placeholder="Registration Number" autoComplete="off" />
+              {errors.regdno && (
+            <p className="error-message">{errors.regdno.message}</p>
+          )}
+            </div>
             </div>
             <div>
               <label htmlFor="branch">Branch</label>
-              <input type="text" name="branch" id="branch" onChange={handleInput} value={user.branch} placeholder="Enter your Branch" autoComplete="off" />
+              <input type="text" {...register('branch')}  name="branch" id="branch" onChange={handleInput} value={user.branch} placeholder="Enter your Branch" autoComplete="off" />
+              {errors.branch && (
+            <p className="error-message">{errors.branch.message}</p>
+          )}
             </div>
-            <div className="phone-container grid-two-col">
-              <label htmlFor="Phone Number">Registration No:</label>
-              <input type="number" name="regdno" onChange={handleInput} value={user.regdno} id="Phone-Number" placeholder="Phone Number" autoComplete="off" />
-            </div>
+            {/* <div className="phone-container grid-two-col">
+              <label htmlFor="regdno">Registration No:</label>
+              <input type="number" name="regdno" onChange={handleInput} value={user.regdno} id="Phone-Number" placeholder="Registration Number" autoComplete="off" />
+              {errors.regdno && (
+            <p className="error-message">{errors.regdno.message}</p>
+          )}
+            </div> */}
             <div className="grid-two-col">
-              <label htmlFor="preference-1">Your Domain Preference</label>
-              <select name="preference-1" onChange={option1} id="preference-1">
-                <option value="Preference 1" name="pref1">Preference 1</option>
+             <div> <label htmlFor="preference-1" > Select Your Domain Preference 1</label>
+              <select name="preference-1" {...register('select')}   onChange={option1} id="preference-1" >
+              <option disabled></option>
+                {/* <option value="Preference 1" name="pref1">Preference 1</option> */}
                 <option value="Cs-Electronics" name="pref1">Cs-Electronics</option>
                 <option value="Chemical" name="pref1">Chemical</option>
                 <option value="Mechanical" name="pref1">Mechanical</option>
                 <option value="Management" name="pref1">Management</option>
               </select>
-
-              <select name="preference-2" onChange={option2} id="preference-2">
-                <option value="Preference 2" name="pref2">Preference 2</option>
+              </div>
+              <div>
+              <label htmlFor="preference-2" > Select Your Domain Preference 2</label>
+              <select name="preference-2" onChange={option2} id="preference-2" >
+              <option disabled></option>
+                {/* <option value="Preference 2" name="pref2">Preference </option> */}
                 <option value="Cs-Electronics" name="pref2">Cs-Electronics</option>
                 <option value="Chemical" name="pref2">Chemical</option>
                 <option value="Mechanical" name="pref2">Mechanical</option>
                 <option value="Management" name="pref2">Management</option>
               </select>
+              </div>
+              {errors.select && (
+            <p className="error-message">{errors.select.message}</p>
+          )}
             </div>
             <div className="bottom-container grid-two-col">
               <p>Registered already ? <Link onClick={Login} className="signIn-text">Sign In</Link></p>
             </div>
-            <input className="sign-up-btn" type="submit" value="Sign Up" onClick={postRegister} />
+            <input className="sign-up-btn" type="submit" value="Sign Up"/>
           </form>
         </div>
       </div>
