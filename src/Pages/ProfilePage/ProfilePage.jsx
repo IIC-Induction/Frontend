@@ -124,7 +124,7 @@ const ProfilePage = () => {
           <div className="grid-col-3">
             <p>Level 1 :</p>
             <p >Date : 17 March ,2023</p>
-            <p ><a className='test-link' href="">Take Test 1</a></p>
+            <p ><a className='test-link' href="www.google.com">Take Test 1</a></p>
             <p className='result'>Result : {Status} </p>
           </div>
           <div className="grid-col-3">
